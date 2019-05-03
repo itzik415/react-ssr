@@ -1,7 +1,5 @@
 import express from 'express';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import Home from './client/components/Home';
+import renderer from './helpers/renderer';
 
 const app = express();
 
@@ -9,21 +7,8 @@ const app = express();
 // Telling express to open the public directory for the outside world
 app.use(express.static('public'));
 
-app.get('/', (req,res) => {
-    const content = renderToString(<Home />);
-
-    const html = `
-        <html>
-            <head>
-                <title>SSR Course</title>
-            </head>
-            <body>
-                <div id="root">${content}</div>
-                <script src="bundle.js"></script>
-            </body>
-        </html>
-    `;
-    res.send(html)
+app.get('/', (req, res) => { 
+    res.send(renderer(req))
 });
 
 app.listen(3000, () => {
