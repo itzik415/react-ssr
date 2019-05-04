@@ -7,7 +7,7 @@ const app = express();
 // Telling express to open the public directory for the outside world
 app.use(express.static('public'));
 
-app.get('/', (req, res) => { 
+app.get('*', (req, res) => { 
     res.send(renderer(req))
 });
 
